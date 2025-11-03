@@ -1,6 +1,3 @@
-```markdown
-# Study Buddy - Setup Instructions
-
 ## Quick Start Guide
 
 Follow these simple steps to run the Study Buddy application:
