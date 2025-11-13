@@ -83,29 +83,29 @@ def demo_rag_agent():
         print(f"Building knowledge base for {course['name']}...")
         try:
             rag_agent.build_knowledge_base(course['path'], course['name'])
-            print(f"✅ {course['name']} knowledge base built successfully!")
+            print(f" {course['name']} knowledge base built successfully!")
         except Exception as e:
-            print(f"❌ Error building knowledge base for {course['name']}: {e}")
+            print(f" Error building knowledge base for {course['name']}: {e}")
     
     # Interactive querying
     while True:
-        question = input("\n❓ Ask a question (or 'quit' to exit): ")
+        question = input("\n Ask a question (or 'quit' to exit): ")
         if question.lower() == 'quit':
             break
             
-        print("\n🤖 Thinking...")
+        print("\n Thinking...")
         try:
             result = rag_agent.query(question)
             print(f"\nAnswer: {result['answer']}")
             print(f"Sources: {result['sources']}")
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f" Error: {e}")
 
 def demo_formatter_agent():
     """Demo the Formatter agent"""
     config = ConfigLoader()
     
-    print("\n📝 Study Buddy - Formatter Agent Demo")
+    print("\n Study Buddy - Formatter Agent Demo")
     formatter_agent = FormatterAgent(config)
     
     # Read sample solution
@@ -116,7 +116,7 @@ def demo_formatter_agent():
     result = formatter_agent.text_to_latex(sample_solution, "homework")
     
     if result["is_valid"]:
-        print("✅ LaTeX conversion successful!")
+        print(" LaTeX conversion successful!")
         print(f"Model used: {result['model_used']}")
         print("\nGenerated LaTeX:")
         print("=" * 50)
@@ -128,14 +128,14 @@ def demo_formatter_agent():
             f.write(result["latex_code"])
         print("Saved to ./test_outputs/solution.tex")
     else:
-        print("❌ LaTeX conversion failed:")
+        print(" LaTeX conversion failed:")
         print(result.get("error", "Unknown error"))
 
 def demo_integrated_workflow():
     """Demo integrated RAG + Formatter workflow"""
     config = ConfigLoader()
     
-    print("\n🔄 Study Buddy - Integrated Workflow Demo")
+    print("\n Study Buddy - Integrated Workflow Demo")
     print("=" * 50)
     
     # Initialize both agents
@@ -148,25 +148,25 @@ def demo_integrated_workflow():
     # Ask a question and format the answer
     question = "What is the time complexity of DFS and BFS?"
     
-    print(f"❓ Question: {question}")
-    print("\n🤖 Getting answer from course materials...")
+    print(f" Question: {question}")
+    print("\n Getting answer from course materials...")
     
     rag_result = rag_agent.query(question)
     answer = rag_result["answer"]
     
-    print(f"📚 Answer: {answer}")
+    print(f" Answer: {answer}")
     
-    print("\n🔄 Converting answer to LaTeX...")
+    print("\n Converting answer to LaTeX...")
     latex_result = formatter_agent.text_to_latex(answer, "explanation")
     
     if latex_result["is_valid"]:
-        print("✅ Answer converted to LaTeX!")
-        print("\n📄 Formatted Explanation:")
+        print(" Answer converted to LaTeX!")
+        print("\n Formatted Explanation:")
         print("=" * 40)
         print(latex_result["latex_code"])
         print("=" * 40)
     else:
-        print("❌ LaTeX conversion failed")
+        print(" LaTeX conversion failed")
 
 def main():
     parser = argparse.ArgumentParser(description="Study Buddy AI Agent")
@@ -180,7 +180,7 @@ def main():
     
     # Check for GROQ API key if using RAG
     if args.mode in ["rag", "integrated", "all"] and not os.getenv("GROQ_API_KEY"):
-        print("⚠️  GROQ_API_KEY not set. RAG agent will use Groq for inference.")
+        print("  GROQ_API_KEY not set. RAG agent will use Groq for inference.")
         print("   Set it with: export GROQ_API_KEY=your_key_here")
     
     # Run demos based on mode
